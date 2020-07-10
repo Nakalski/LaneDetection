@@ -14,3 +14,8 @@ This subsection will explain the pipeline of the Algorithm step by step.
 The proposed algorithm follows a straight forward pipeline with several steps as shown in the following block diagram. It will iterate through every frame of the video and do the following steps in each of them:
 
 ![Block Diagram](https://github.com/Nakalski/LaneDetection/blob/master/images/Diagrama.png)
+![Input Frame](https://github.com/Nakalski/LaneDetection/blob/master/images/input_frame.png)
+![Perspective Transform](https://github.com/Nakalski/LaneDetection/blob/master/images/transform.png)
+![Otsu](https://github.com/Nakalski/LaneDetection/blob/master/images/otsu.png)
+![Inverse Transform](https://github.com/Nakalski/LaneDetection/blob/master/images/inverse_transform.png)
+![Output Frame](https://github.com/Nakalski/LaneDetection/blob/master/images/output_frame.png)
