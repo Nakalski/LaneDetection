@@ -12,7 +12,8 @@ This subsection will explain the pipeline of the Algorithm step by step.
 - Block Diagram
 
 The proposed algorithm follows a straight forward pipeline with several steps as shown in the following block diagram. It will iterate through every frame of the video and do the following steps in each of them:
-```mermaid
+
+'''mermaid
 graph LR
 A(( )) --> B[Input Frame]
 B --> D[Gaussian Pyramid]
@@ -26,4 +27,4 @@ I --> J(( ))
 B --> J
 J --> K[Combined Images]
 
-```
+'''
