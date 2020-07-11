@@ -37,4 +37,6 @@ The proposed algorithm follows a straight forward pipeline with several steps as
 
 - Output Frame
  
+  The output frame is simply an addition of two images, the detected lanes and the input frame.
+  
 ![Output Frame](https://github.com/Nakalski/LaneDetection/blob/master/images/output_frame.png)
