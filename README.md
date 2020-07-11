@@ -16,6 +16,8 @@ The proposed algorithm follows a straight forward pipeline with several steps as
 ![Block Diagram](https://github.com/Nakalski/LaneDetection/blob/master/images/Diagrama.png)
 
 - Input Frame
+
+ The input video resolution is 1280x720. Then for preprocessing is applied a Gaussian Pyramid which reduces the resolution in both axis in half and applies a Gaussian Filter for smoothing the image.
  
 ![Input Frame](https://github.com/Nakalski/LaneDetection/blob/master/images/input_frame.png)
 
