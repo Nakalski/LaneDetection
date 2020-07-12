@@ -5,18 +5,55 @@
 using namespace cv;
 using namespace std;
 
-#define X_warped 200
-#define Y_warped 100
-RNG rng(12345);
+#define X_warped 320
+#define Y_warped 240
+
+vector<Point2f> slidingWindow(Mat image, Rect window)
+{
+    vector<Point2f> points;
+    const Size imgSize = image.size();
+    bool shouldBreak = false;
+    
+    while (true)
+    {
+        float currentX = window.x + window.width * 0.5f;
+        Mat roi = image(window);
+        vector<Point2f> locations;
+        cv::findNonZero(roi, locations);
+        float avgX = 0.0f;
+        for (int i = 0; i < locations.size(); ++i)
+        {
+            float x = locations[i].x;
+            avgX += window.x + x;
+        }
+        avgX = locations.empty() ? currentX : avgX / locations.size();
+        Point point(avgX, window.y + window.height * 0.5f);
+        points.push_back(point);
+        window.y -= window.height;
+        if (window.y < 0)
+        {
+            window.y = 0;
+            shouldBreak = true;
+        }
+        window.x += (point.x - currentX);
+        if (window.x < 0)
+            window.x = 0;
+        if (window.x + window.width >= imgSize.width)
+            window.x = imgSize.width - window.width - 1;
+        if (shouldBreak)
+            break;
+    }
+    return points;
+}
+
+
 int main(int argc, char **argv)
 {
-
     const int lowThreshold = 20;
     const int ratio = 3;
-
-    cv::namedWindow("Video", cv::WINDOW_AUTOSIZE);
     cv::VideoCapture cap;
-    std::string path = "2.avi";
+    std::string path = std::string(argv[1]);
+    //std::string path = "Videos/2.avi";
     cap.open(path);
     cv::Point2f obj_pts[4], img_pts[4];
     img_pts[0].x = 150;
@@ -38,7 +75,8 @@ int main(int argc, char **argv)
     int n;
     cv::Mat matrix, warped, gray, th, sum, inverted_matrix, frame, reduced_res, canny_test, mask, masked_drawed_lines, teste;
     matrix = cv::getPerspectiveTransform(img_pts, obj_pts);
-    invert(matrix, inverted_matrix);
+    Mat invertedPerspectiveMatrix;
+    invert(matrix, invertedPerspectiveMatrix);
     for (;;)
     {
         cap >> frame;
@@ -54,32 +92,44 @@ int main(int argc, char **argv)
 
         cv::warpPerspective(reduced_res, warped, matrix, cv::Size(X_warped, Y_warped));
         cv::cvtColor(warped, gray, cv::COLOR_RGB2GRAY);
-
-        /////////////////////////////////////////////////////////////////////////////////
-        /// CANNY FOR NOISE REMOVAL
         cv::Canny(warped, canny_test, lowThreshold, lowThreshold * ratio, 3, true);
-        cv::dilate(canny_test, mask, Mat(), Point(-1, -1), 4, 1, 1);
-        //////////////////////////////////////////////////////////////////////////////////
-        /// OTSU 
+        cv::dilate(canny_test, mask, Mat(), Point(-1, -1), 1, 1, 1);
+        cv::morphologyEx(mask, mask, cv::MORPH_CLOSE, cv::getStructuringElement(cv::MORPH_RECT, cv::Size(10, 10)));
+        cv::morphologyEx(mask, mask, cv::MORPH_CLOSE, cv::getStructuringElement(cv::MORPH_RECT, cv::Size(10, 10)));
         cv::threshold(gray, th, 0, 255, cv::THRESH_BINARY | cv::THRESH_OTSU);
         cv::bitwise_and(th, mask, teste); /// MAS
-        cv::HoughLinesP(teste, lines, 1, CV_PI / 180, 30, 15, 10);
-        cv::Mat drawed_lines = cv::Mat::zeros(warped.size(), warped.type()), warped_lines = cv::Mat::zeros(reduced_res.size(), reduced_res.type());
-        for (size_t i = 0; i < lines.size(); i++)
+        vector<Point2f> pts = slidingWindow(teste, Rect(0,210,60,30));
+        vector<Point> allPts;
+        vector<Point2f> outPts;
+        cv::perspectiveTransform(pts, outPts, invertedPerspectiveMatrix);
+        for (int i = 0; i < outPts.size() - 1; ++i)
         {
-            Vec4i l = lines[i];
-            line(drawed_lines, Point(l[0], l[1]), Point(l[2], l[3]), Scalar(0, 0, 255), 2, cv::LINE_AA);
+            cv::line(reduced_res, outPts[i], outPts[i + 1], Scalar(255, 0, 0), 3);
+            allPts.push_back(Point(outPts[i].x, outPts[i].y));
         }
-        cv::warpPerspective(drawed_lines, warped_lines, matrix, reduced_res.size(), WARP_INVERSE_MAP, BORDER_TRANSPARENT);
-        cv::addWeighted(reduced_res, 0.7, warped_lines, 0.3, 0, sum);
-        ////////////////////////////////////////////////////////////////////////////////
-
-        cv::imshow("Th", th);
-        cv::imshow("Lines", warped_lines);
-        cv::imshow("sum", sum);
+        allPts.push_back(Point(outPts[outPts.size() - 1].x, outPts[outPts.size() - 1].y));
+        Mat out;
+        cv::cvtColor(teste, out, COLOR_GRAY2BGR);
+        for (int i = 0; i < pts.size() - 1; ++i) 
+            line(out, pts[i], pts[i + 1], Scalar(255, 0, 0));
+        pts = slidingWindow(teste, Rect(260, 210, 60, 30));
+        cv::perspectiveTransform(pts, outPts, invertedPerspectiveMatrix);
+        for (int i = 0; i < outPts.size() - 1; ++i)
+        {
+            line(reduced_res, outPts[i], outPts[i + 1], Scalar(0, 0, 255), 3);
+            allPts.push_back(Point(outPts[outPts.size() - i - 1].x, outPts[outPts.size() - i - 1].y));
+        }
+        allPts.push_back(Point(outPts[0].x - (outPts.size() - 1) , outPts[0].y));
+        for (int i = 0; i < pts.size() - 1; ++i)
+            line(out, pts[i], pts[i + 1], Scalar(0, 0, 255));
+        vector<vector<Point>> arr;
+        arr.push_back(allPts);
+        Mat overlay = Mat::zeros(reduced_res.size(), reduced_res.type());
+        cv::fillPoly(overlay, arr, Scalar(0, 255, 100));
+        cv::addWeighted(reduced_res, 1, overlay, 0.5, 0, reduced_res); //Overlay it
+        cv::imshow("Preprocess", out);
+        cv::imshow("src", reduced_res);
         cv::imshow("WarpedPerspective", gray);
-        cv::imshow("Video", reduced_res);
-        cv::imshow("mask", teste);
         if (cv::waitKey(33) >= 0)
             break;
     }
