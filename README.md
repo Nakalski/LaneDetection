@@ -25,7 +25,7 @@ The proposed algorithm follows a straight forward pipeline with several steps as
  
  (PERSP. TRANSF. EXPLANATION HERE).
  
-![Perspective Transform](https://github.com/Nakalski/LaneDetection/blob/master/images/transform.png)
+![Perspective Transform](https://github.com/Nakalski/LaneDetection/blob/master/images/2.png)
 
 - Otsu Thresholding
  
@@ -41,7 +41,7 @@ The proposed algorithm follows a straight forward pipeline with several steps as
  
  (PERSP. TRANSF. EXPLANATION HERE).
  
-![Inverse Transform](https://github.com/Nakalski/LaneDetection/blob/master/images/2.png)
+![Inverse Transform](https://github.com/Nakalski/LaneDetection/blob/master/images/1.png)
 
 - Output Frame
  
