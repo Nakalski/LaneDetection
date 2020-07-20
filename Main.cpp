@@ -107,6 +107,7 @@ int main(int argc, char **argv)
         cv::morphologyEx(mask, mask, cv::MORPH_CLOSE, cv::getStructuringElement(cv::MORPH_RECT, cv::Size(10, 10)));
         cv::morphologyEx(mask, mask, cv::MORPH_CLOSE, cv::getStructuringElement(cv::MORPH_RECT, cv::Size(10, 10)));
         cv::threshold(gray, th, 0, 255, cv::THRESH_BINARY | cv::THRESH_OTSU);
+        cv::imshow("th", th);
         cv::bitwise_and(th, mask, teste); 
         cv::imshow("mask", mask);
         vector<Point2f> pts = slidingWindow(teste, Rect(0, Y_warped-10, X_warped/4, 10));
