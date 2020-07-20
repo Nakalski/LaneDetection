@@ -31,7 +31,7 @@ The proposed algorithm follows a straight forward pipeline with several steps as
  
  Otsu Thresholding is a image processing technique which is used to perform image thresholding. In the simplest form, the algorithm returns a single intensity threshold that separate pixels into two classes, foreground and background. This threshold is determined by minimizing intra-class intensity variance, or equivalently, by maximizing inter-class variance. 
  
-![Otsu](https://github.com/Nakalski/LaneDetection/blob/master/images/otsu.png)
+![Otsu](https://github.com/Nakalski/LaneDetection/blob/master/images/otsu2.png)
 
 - Canny Edge Detection
 
