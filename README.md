@@ -25,32 +25,24 @@ The proposed algorithm follows a straight forward pipeline with several steps as
  
  The perspective transform is used to convert the sideways view of the frame into a top one. The algorithm does this using a transformation matrix based on four points. For this type of application this transformation is also called Bird's Eye View.
  
-![Perspective Transform](https://github.com/Nakalski/LaneDetection/blob/master/images/2.png)
 
 - Otsu Thresholding
  
  Otsu Thresholding is a image processing technique which is used to perform image thresholding. In the simplest form, the algorithm returns a single intensity threshold that separate pixels into two classes, foreground and background. This threshold is determined by minimizing intra-class intensity variance, or equivalently, by maximizing inter-class variance. 
  
-![Otsu](https://github.com/Nakalski/LaneDetection/blob/master/images/otsu2.png)
 
 - Canny Edge Detection
 
 Canny edge detection is a multi-step algorithm that can detect edges with noise supression at the same time. If you wanna know more about the step by step of the algorith you can check on this link: [CannyWiki](https://en.wikipedia.org/wiki/Canny_edge_detector).
 
-![Canny](https://github.com/Nakalski/LaneDetection/blob/master/images/canny.png)
-
 - Morphology Operations
  
  On this step the output of the Canny Edge Detector goes through some morphology operations to remove unwanted edges and to highlight the ones that matter.
  
- ![Morphology](https://github.com/Nakalski/LaneDetection/blob/master/images/morph.png)
-
 - Inverse Perspective Transform
  
  Simply the inverse operation of the first perspective tranform.
  
-![Inverse Transform](https://github.com/Nakalski/LaneDetection/blob/master/images/1.png)
-
 - Output Frame
  
   The output frame is simply an addition of two images, the detected lanes and the input frame.
