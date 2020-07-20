@@ -101,12 +101,14 @@ int main(int argc, char **argv)
         cv::warpPerspective(reduced_res, warped, matrix, cv::Size(X_warped, Y_warped));
         cv::cvtColor(warped, gray, cv::COLOR_RGB2GRAY);
         cv::Canny(warped, canny_test, lowThreshold, lowThreshold * ratio, 3, true);
+        cv::imshow("canny", canny_test);
         cv::dilate(canny_test, mask, Mat(), Point(-1, -1), 5, 1, 1);
         cv::morphologyEx(mask, mask, cv::MORPH_CLOSE, cv::getStructuringElement(cv::MORPH_RECT, cv::Size(10, 10)));
         cv::morphologyEx(mask, mask, cv::MORPH_CLOSE, cv::getStructuringElement(cv::MORPH_RECT, cv::Size(10, 10)));
         cv::morphologyEx(mask, mask, cv::MORPH_CLOSE, cv::getStructuringElement(cv::MORPH_RECT, cv::Size(10, 10)));
         cv::threshold(gray, th, 0, 255, cv::THRESH_BINARY | cv::THRESH_OTSU);
         cv::bitwise_and(th, mask, teste); 
+        cv::imshow("mask", mask);
         vector<Point2f> pts = slidingWindow(teste, Rect(0, Y_warped-10, X_warped/4, 10));
         vector<Point2f> ptsE, ptsD;
         cv::perspectiveTransform(pts, ptsE, invertedPerspectiveMatrix);
@@ -149,6 +151,7 @@ int main(int argc, char **argv)
             cv::Point2f p1((ptsD[i].x+ptsE[i].x)/2,(ptsD[i].y+ptsE[i].y)/2 ), p2((ptsD[i+1].x+ptsE[i+1].x)/2,(ptsD[i+1].y+ptsE[i+1].y)/2 );
             line(overlay,p1, p2 , Scalar(0, 255, 255), 5);
         }
+        cv::imshow("orig", reduced_res);
         cv::addWeighted(reduced_res, 1, overlay, 0.5, 0, reduced_res); //Overlay it
         cv::imshow("Preprocess", out);
         cv::imshow("src", reduced_res);
