@@ -23,7 +23,7 @@ The proposed algorithm follows a straight forward pipeline with several steps as
 
 - Perspective Transform
  
- (PERSP. TRANSF. EXPLANATION HERE).
+ The perspective transform is used to convert the sideways view of the frame into a top one. The algorithm does this using a transformation matrix based on four points. For this type of application this transformation is also called Bird's Eye View.
  
 ![Perspective Transform](https://github.com/Nakalski/LaneDetection/blob/master/images/2.png)
 
