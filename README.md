@@ -4,7 +4,7 @@ A simple lane detector  using C++ and OpenCV that identifies the lanes and track
 
 
 **Initial Goal**
-Since i already knew something about OpenCV in Python, I decided to try to learn the same library but in C++, thus this small project was born. It detect lanes and track the point’s movement to determine if the vehicle is turning or changing slope.
+Since i already knew something about OpenCV in Python, I decided to try to learn the same library but in C++, thus this small project was born. It detect lanes and track the point’s.
 
 **Algorithm**
 This subsection will explain the pipeline of the Algorithm step by step.
@@ -23,6 +23,8 @@ The proposed algorithm follows a straight forward pipeline with several steps as
 
 - Perspective Transform
  
+ (PERSP. TRANSF. EXPLANATION HERE).
+ 
 ![Perspective Transform](https://github.com/Nakalski/LaneDetection/blob/master/images/transform.png)
 
 - Otsu Thresholding
@@ -31,7 +33,13 @@ The proposed algorithm follows a straight forward pipeline with several steps as
  
 ![Otsu](https://github.com/Nakalski/LaneDetection/blob/master/images/otsu.png)
 
+- Canny Edge Detection
+
+   (CANNY EXPLANATION HERE).
+
 - Inverse Perspective Transform
+ 
+ (PERSP. TRANSF. EXPLANATION HERE).
  
 ![Inverse Transform](https://github.com/Nakalski/LaneDetection/blob/master/images/inverse_transform.png)
 
