@@ -35,7 +35,7 @@ The proposed algorithm follows a straight forward pipeline with several steps as
 
 - Canny Edge Detection
 
-Canny edge detection is a multi-step algorithm that can detect edges with noise supression at the same time. If you wanna know more about the step by step of the algorith you can check on this link: en.wikipedia.org/wiki/Canny_edge_detector.
+Canny edge detection is a multi-step algorithm that can detect edges with noise supression at the same time. If you wanna know more about the step by step of the algorith you can check on this link: [CannyWiki](en.wikipedia.org/wiki/Canny_edge_detector).
 
 ![Canny](https://github.com/Nakalski/LaneDetection/blob/master/images/canny.png)
 
