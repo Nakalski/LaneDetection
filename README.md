@@ -41,10 +41,10 @@ The proposed algorithm follows a straight forward pipeline with several steps as
  
  (PERSP. TRANSF. EXPLANATION HERE).
  
-![Inverse Transform](https://github.com/Nakalski/LaneDetection/blob/master/images/inverse_transform.png)
+![Inverse Transform](https://github.com/Nakalski/LaneDetection/blob/master/images/2.png)
 
 - Output Frame
  
   The output frame is simply an addition of two images, the detected lanes and the input frame.
   
-![Output Frame](https://github.com/Nakalski/LaneDetection/blob/master/images/output_frame.png)
+![Output Frame](https://github.com/Nakalski/LaneDetection/blob/master/images/3.png)
