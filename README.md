@@ -39,6 +39,14 @@ Canny edge detection is a multi-step algorithm that can detect edges with noise 
  
  On this step the output of the Canny Edge Detector goes through some morphology operations to remove unwanted edges and to highlight the ones that matter.
  
+ - Sliding Window
+ 
+ HERE
+ 
+ - Average lane
+ 
+ HERE
+ 
 - Inverse Perspective Transform
  
  Simply the inverse operation of the first perspective tranform.
