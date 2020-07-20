@@ -35,7 +35,7 @@ The proposed algorithm follows a straight forward pipeline with several steps as
 
 - Canny Edge Detection
 
-   (CANNY EXPLANATION HERE).
+![Canny](https://github.com/Nakalski/LaneDetection/blob/master/images/canny.png)
 
 - Inverse Perspective Transform
  
