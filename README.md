@@ -4,7 +4,7 @@ A simple lane detector  using C++ and OpenCV that identifies the lanes and track
 
 
 ## Initial Goal
-Since i already knew something about OpenCV in Python, I decided to try to learn the same library but in C++, thus this small project was born. It detect lanes and track the lane point's.
+Since i already knew something about OpenCV in Python, I decided to try to learn the same library but in C++. Thus this small project was born. It detect lanes and track the lane point's.
 
 ## Algorithm
 This subsection will explain the pipeline of the Algorithm step by step. Some of the intermidiate images for example purposes are in [Here](https://github.com/Nakalski/LaneDetection/blob/master/images/)
